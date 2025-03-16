@@ -1,0 +1,558 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{xcolor}
+\usepackage[left=3cm,right=2.55cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage[backend=biber, style=authoryear]{biblatex}
+\usepackage[fontsize=12pt]{scrextend}
+\usepackage{indentfirst}
+\usepackage{setspace}
+\usepackage[singlelinecheck=false]{caption}
+\usepackage{float}
+\usepackage{sectsty}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+\allsectionsfont{\centering}
+\subsectionfont{\raggedright}
+\subsubsectionfont{\raggedright}
+
+\pagenumbering{gobble}
+
+\begin{centering}
+
+\vspace{3cm}
+
+\vspace{1cm}
+
+\Large
+{NATIONAL RESEARCH UNIVERSITY \\ HIGHER SCHOOL OF ECONOMICS}
+\normalsize
+\\
+{\bf International College of Economics and Finance}
+\vspace{1cm}
+
+
+\Large
+\doublespacing
+Karapsin Danila\\
+Gulomjonov Furkatjon\\
+\normalsize
+Takehome Exam, Topic 8\\
+38.04.01 ECONOMICS\\
+Master's Programme {\bf 'Financial Economics'}
+
+\vspace{1 cm}
+
+\normalsize
+\singlespacing
+
+
+\mbox{}
+\vfill
+\normalsize
+Moscow 2024
+
+\end{centering}
+
+\newpage
+
+\pagenumbering{arabic}
+\setcounter{page}{2}
+
+\tableofcontents
+
+\newpage
+
+\subsection{a) - data loading}\label{a---data-loading}
+
+This section aims to show how did we load data needed for the project.
+The code which does the job is contained in the \emph{data\_load.R} file
+and duplicated below for convenience. The idea is simple: firstly, we
+save a data frame with all cryptocurrencies in the \emph{crypto\_df}
+object, then we are using \emph{walk} function from \emph{purrr} package
+to load every needed token, then the loaded data is saved in the loaded
+data folder in the rds format.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rm}\NormalTok{(}\AttributeTok{list =} \FunctionTok{ls}\NormalTok{())}
+\FunctionTok{gc}\NormalTok{()}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(crypto2)}
+\FunctionTok{library}\NormalTok{(purrr)}
+
+\NormalTok{crypto\_df }\OtherTok{\textless{}{-}} 
+  \FunctionTok{crypto\_list}\NormalTok{()}\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{filter}\NormalTok{(id }\SpecialCharTok{\textless{}=} \DecValTok{10000}\NormalTok{)}
+
+\FunctionTok{walk}\NormalTok{(}\FunctionTok{unique}\NormalTok{(crypto\_df}\SpecialCharTok{$}\NormalTok{id),}
+    \SpecialCharTok{\textasciitilde{}}\NormalTok{ crypto\_df}\SpecialCharTok{\%\textgreater{}\%}
+       \FunctionTok{filter}\NormalTok{(id }\SpecialCharTok{==}\NormalTok{ .x)}\SpecialCharTok{\%\textgreater{}\%}
+       \FunctionTok{crypto\_history}\NormalTok{(}\AttributeTok{convert =} \StringTok{"USD"}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+       \FunctionTok{saveRDS}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"loaded\_data}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{"}\NormalTok{, .x, }\StringTok{".rds"}\NormalTok{))}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\newpage
+
+\subsection{b), c) - data cleaning +
+forecasting}\label{b-c---data-cleaning-forecasting}
+
+This section provides an overview of the code from \emph{predictions.R}
+file. Firstly, we consolidate each data frame loaded on the previous
+step into a single data frame using \emph{map\_dfr} function from
+\emph{purrr} package. Then, we select only columns which will be needed
+further, keeping only those coins for which we have from 60 to 730
+observations. Lastly, we compute log returns and also for every coin we
+are computing start of the prediction interval, which is equal to
+last\_prediction\_day + 1.
+
+Note that \emph{group\_by(id)} in the code below ensures that filtering
+is correct, also because of that last\_prediction\_day + 1 is defined
+for every coin separately.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(magrittr)}
+\FunctionTok{library}\NormalTok{(purrr)}
+\FunctionTok{library}\NormalTok{(forecast)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+
+\CommentTok{\# loaded data concatenation + log\_returns + some helpful vars}
+\NormalTok{df }\OtherTok{\textless{}{-}} 
+  \FunctionTok{list.files}\NormalTok{(}\StringTok{"loaded\_data"}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{map\_dfr}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{.x}\SpecialCharTok{\%\textgreater{}\%}
+              \FunctionTok{paste0}\NormalTok{(}\StringTok{"loaded\_data}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{"}\NormalTok{, .)}\SpecialCharTok{\%\textgreater{}\%}
+              \FunctionTok{readRDS}\NormalTok{()}
+\NormalTok{    )}\SpecialCharTok{\%\textgreater{}\%}
+  
+  \FunctionTok{select}\NormalTok{(id, time\_open, close)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(id)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(time\_open}\SpecialCharTok{\%\textgreater{}\%}
+          \FunctionTok{length}\NormalTok{()}\SpecialCharTok{\%\textgreater{}\%}
+          \FunctionTok{unique}\NormalTok{()}\SpecialCharTok{\%\textgreater{}\%}
+          \FunctionTok{between}\NormalTok{(}\DecValTok{60}\NormalTok{, }\DecValTok{730}\NormalTok{)}
+\NormalTok{  )}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(id, time\_open)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{day\_num =} \FunctionTok{row\_number}\NormalTok{())}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{last\_day\_num =} \FunctionTok{max}\NormalTok{(day\_num))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{log\_return =}\NormalTok{ close}\SpecialCharTok{\%\textgreater{}\%}
+                        \StringTok{\textasciigrave{}}\AttributeTok{/}\StringTok{\textasciigrave{}}\NormalTok{(}\FunctionTok{lag}\NormalTok{(close, }\DecValTok{1}\NormalTok{))}\SpecialCharTok{\%\textgreater{}\%} 
+                        \FunctionTok{log}\NormalTok{(),}
+         \AttributeTok{last\_prediction\_day =}\NormalTok{ last\_day\_num}\SpecialCharTok{/}\DecValTok{2}
+\NormalTok{  )}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(log\_return))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{()}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{close)}
+\end{Highlighting}
+\end{Shaded}
+
+Here we are using expanding window approach to forecast log returns. The
+idea is simple, firstly, we start a \emph{while} block. Inside that
+block for every iteration we are checking how many rows we still need to
+fill, if that number is equal to 0, then the job is done and we are
+breaking the \emph{while} loop. Otherwise we continue. Then we use
+\emph{filter} on df object, to keep only training period. In the end, we
+use \emph{group\_by(id)} to compute \emph{auto.arima()} one step ahead
+forecast, from which we are taking a middle point. After that, made
+prediction are added to \emph{predictions\_df} object and we are
+increasing last\_prediction\_day by 1 for those coins for which made
+predictions on the current step.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# expanding window, auto.arima on every step}
+\NormalTok{predictions\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{id =} \FunctionTok{numeric}\NormalTok{(), }
+                             \AttributeTok{day\_num =} \FunctionTok{numeric}\NormalTok{(), }
+                             \AttributeTok{predicted\_log\_return =} \FunctionTok{numeric}\NormalTok{()}
+\NormalTok{                  )}
+
+\ControlFlowTok{while}\NormalTok{(}\ConstantTok{TRUE}\NormalTok{)\{}
+  
+\NormalTok{    rows\_left }\OtherTok{\textless{}{-}}\NormalTok{ df}\SpecialCharTok{\%\textgreater{}\%}\FunctionTok{filter}\NormalTok{(day\_num }\SpecialCharTok{\textgreater{}}\NormalTok{ last\_prediction\_day)}\SpecialCharTok{\%\textgreater{}\%}\FunctionTok{nrow}\NormalTok{()}
+    \ControlFlowTok{if}\NormalTok{(rows\_left }\SpecialCharTok{==} \DecValTok{0}\NormalTok{)\{}\ControlFlowTok{break}\NormalTok{\}}
+    \FunctionTok{print}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"rows left: "}\NormalTok{, rows\_left))}
+      
+\NormalTok{    current\_predictions }\OtherTok{\textless{}{-}} 
+\NormalTok{      df}\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{filter}\NormalTok{(day\_num }\SpecialCharTok{\textless{}}\NormalTok{ last\_prediction\_day }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{group\_by}\NormalTok{(id)}\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{summarise}\NormalTok{(}\AttributeTok{day\_num =} \FunctionTok{max}\NormalTok{(day\_num) }\SpecialCharTok{+} \DecValTok{1}\NormalTok{,}
+                  \AttributeTok{predicted\_log\_return =}\NormalTok{ log\_return}\SpecialCharTok{\%\textgreater{}\%}
+                                          \FunctionTok{auto.arima}\NormalTok{()}\SpecialCharTok{\%\textgreater{}\%}
+                                          \FunctionTok{forecast}\NormalTok{(}\AttributeTok{h =} \DecValTok{1}\NormalTok{)}\SpecialCharTok{\%$\%}
+\NormalTok{                                          mean}
+\NormalTok{        )}\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{ungroup}\NormalTok{()}
+      
+\NormalTok{      predictions\_df}\SpecialCharTok{\%\textless{}\textgreater{}\%}
+        \FunctionTok{rbind}\NormalTok{(current\_predictions)}
+    
+\NormalTok{    df}\SpecialCharTok{\%\textless{}\textgreater{}\%}
+      \FunctionTok{mutate}\NormalTok{(}\AttributeTok{last\_prediction\_day =} \FunctionTok{ifelse}\NormalTok{(id }\SpecialCharTok{\%in\%}\NormalTok{ current\_predictions}\SpecialCharTok{$}\NormalTok{id, }
+\NormalTok{                                          last\_prediction\_day }\SpecialCharTok{+} \DecValTok{1}\NormalTok{, }
+\NormalTok{                                          last\_prediction\_day)}
+\NormalTok{      )}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+After previous step is finished, we are adding predictions to the
+initial data frame and saving it.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# add predicted values and save df for further usage}
+\NormalTok{df}\SpecialCharTok{\%\textless{}\textgreater{}\%}
+  \FunctionTok{left\_join}\NormalTok{(predictions\_df, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"day\_num"}\OtherTok{=}\StringTok{"day\_num"}\NormalTok{, }\StringTok{"id"}\OtherTok{=}\StringTok{"id"}\NormalTok{))}
+
+\FunctionTok{saveRDS}\NormalTok{(df, }\StringTok{"data\_with\_predictions.rds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\newpage
+
+\subsection{d) - prediction intervals}\label{d---prediction-intervals}
+
+The code below is from the \emph{predictions.R} file and it computes all
+the required prediction intervals, except the ``FACI'' intervals
+mentioned in the task, for which there is no function in the package.
+The data frame with computed prediction intervals is then saved in the
+rds format. Note again that we use \emph{group\_by(id)} to compute all
+the intervals for each coin separately.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rm}\NormalTok{(}\AttributeTok{list =} \FunctionTok{ls}\NormalTok{())}
+\FunctionTok{library}\NormalTok{(magrittr)}
+\FunctionTok{library}\NormalTok{(purrr)}
+\FunctionTok{library}\NormalTok{(forecast)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(AdaptiveConformal)}
+
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"data\_with\_predictions.rds"}\NormalTok{)}
+
+\NormalTok{intervals\_df }\OtherTok{\textless{}{-}} 
+\NormalTok{df}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(predicted\_log\_return))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(id)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+            \DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+            \CommentTok{\# alpha 5\%}
+            \AttributeTok{intervals\_AgACI5 =} 
+            \FunctionTok{aci}\NormalTok{(}\AttributeTok{method =} \StringTok{"AgACI"}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{update}\NormalTok{(}\AttributeTok{newY =}\NormalTok{ log\_return, }
+                   \AttributeTok{newpredictions =}\NormalTok{ predicted\_log\_return}
+\NormalTok{            )}\SpecialCharTok{\%$\%}
+\NormalTok{            intervals,}
+
+            \CommentTok{\# no FACI in the package :(}
+            \AttributeTok{intervals\_dtACI5 =} 
+            \FunctionTok{aci}\NormalTok{(}\AttributeTok{method =} \StringTok{"DtACI"}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{update}\NormalTok{(}\AttributeTok{newY =}\NormalTok{ log\_return, }
+                   \AttributeTok{newpredictions =}\NormalTok{ predicted\_log\_return}
+\NormalTok{            )}\SpecialCharTok{\%$\%}
+\NormalTok{            intervals,}
+            
+            \AttributeTok{intervals\_SF\_OGD5 =} 
+            \FunctionTok{aci}\NormalTok{(}\AttributeTok{method =} \StringTok{"SF{-}OGD"}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{update}\NormalTok{(}\AttributeTok{newY =}\NormalTok{ log\_return, }
+                   \AttributeTok{newpredictions =}\NormalTok{ predicted\_log\_return,}
+                   \AttributeTok{parameters=}\FunctionTok{list}\NormalTok{(}
+                   \AttributeTok{gamma =} \FunctionTok{max}\NormalTok{(}\FunctionTok{abs}\NormalTok{(log\_return}\SpecialCharTok{{-}}\NormalTok{predicted\_log\_return))}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{3}\NormalTok{)}
+\NormalTok{                     )}
+\NormalTok{            )}\SpecialCharTok{\%$\%}
+\NormalTok{            intervals,}
+            
+            \AttributeTok{intervals\_SAOCP5 =} 
+            \FunctionTok{aci}\NormalTok{(}\AttributeTok{method =} \StringTok{"SAOCP"}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{update}\NormalTok{(}\AttributeTok{newY =}\NormalTok{ log\_return, }
+                   \AttributeTok{newpredictions =}\NormalTok{ predicted\_log\_return,}
+                   \AttributeTok{parameters=}\FunctionTok{list}\NormalTok{(}
+                   \AttributeTok{D =} \FunctionTok{max}\NormalTok{(}\FunctionTok{abs}\NormalTok{(log\_return}\SpecialCharTok{{-}}\NormalTok{predicted\_log\_return))}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{3}\NormalTok{)}
+\NormalTok{                     )}
+\NormalTok{                   )}\SpecialCharTok{\%$\%}
+\NormalTok{            intervals,}
+            
+            \DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+            \CommentTok{\# alpha 1\%}
+            \AttributeTok{intervals\_AgACI1 =} 
+            \FunctionTok{aci}\NormalTok{(}\AttributeTok{method =} \StringTok{"AgACI"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.99}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{update}\NormalTok{(}\AttributeTok{newY =}\NormalTok{ log\_return, }
+                   \AttributeTok{newpredictions =}\NormalTok{ predicted\_log\_return}
+\NormalTok{            )}\SpecialCharTok{\%$\%}
+\NormalTok{            intervals,}
+            
+            \CommentTok{\# no FACI in the package :(}
+            \AttributeTok{intervals\_dtACI1 =} 
+            \FunctionTok{aci}\NormalTok{(}\AttributeTok{method =} \StringTok{"DtACI"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.99}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{update}\NormalTok{(}\AttributeTok{newY =}\NormalTok{ log\_return, }
+                   \AttributeTok{newpredictions =}\NormalTok{ predicted\_log\_return}
+\NormalTok{            )}\SpecialCharTok{\%$\%}
+\NormalTok{            intervals,}
+                                  
+            \AttributeTok{intervals\_SF\_OGD1 =} 
+            \FunctionTok{aci}\NormalTok{(}\AttributeTok{method =} \StringTok{"SF{-}OGD"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.99}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{update}\NormalTok{(}\AttributeTok{newY =}\NormalTok{ log\_return, }
+                   \AttributeTok{newpredictions =}\NormalTok{ predicted\_log\_return,}
+                   \AttributeTok{parameters=}\FunctionTok{list}\NormalTok{(}
+                   \AttributeTok{gamma =} \FunctionTok{max}\NormalTok{(}\FunctionTok{abs}\NormalTok{(log\_return}\SpecialCharTok{{-}}\NormalTok{predicted\_log\_return))}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{3}\NormalTok{)}
+\NormalTok{                     )}
+\NormalTok{            )}\SpecialCharTok{\%$\%}
+\NormalTok{            intervals,}
+            
+            \AttributeTok{intervals\_SAOCP1 =} 
+            \FunctionTok{aci}\NormalTok{(}\AttributeTok{method =} \StringTok{"SAOCP"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.99}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{update}\NormalTok{(}\AttributeTok{newY =}\NormalTok{ log\_return, }
+                   \AttributeTok{newpredictions =}\NormalTok{ predicted\_log\_return,}
+                   \AttributeTok{parameters=}\FunctionTok{list}\NormalTok{(}
+                   \AttributeTok{D =} \FunctionTok{max}\NormalTok{(}\FunctionTok{abs}\NormalTok{(log\_return}\SpecialCharTok{{-}}\NormalTok{predicted\_log\_return))}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{3}\NormalTok{)}
+\NormalTok{                     )}
+\NormalTok{            )}\SpecialCharTok{\%$\%}
+\NormalTok{            intervals}
+\NormalTok{  )}
+  
+\CommentTok{\# we can do that since the order of days is preserved}
+\NormalTok{intervals\_df}\SpecialCharTok{$}\NormalTok{day\_num }\OtherTok{\textless{}{-}} 
+\NormalTok{  df}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(predicted\_log\_return))}\SpecialCharTok{\%$\%}
+\NormalTok{  day\_num}
+
+\NormalTok{intervals\_df}\SpecialCharTok{$}\NormalTok{log\_return }\OtherTok{\textless{}{-}} 
+\NormalTok{  df}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(predicted\_log\_return))}\SpecialCharTok{\%$\%}
+\NormalTok{  log\_return}
+
+\FunctionTok{saveRDS}\NormalTok{(intervals\_df, }\StringTok{"VaR\_data.rds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\newpage
+
+\subsection{e) - backtesting}\label{e---backtesting}
+
+The code in \emph{uc\_cc\_report.R} file allows to create a table which
+provided below. The code itself is not provided in that report because
+of its ugliness (but it is availiable in the mentioned file). ``+''
+indicates that both tests allowed to reject H0, ``uc'' or ``cc''
+inidicate that we were able to reject the null only with one test, and,
+finally, ``-'' means that we can not reject the null with both tests.
+
+\begingroup\fontsize{8}{10}\selectfont
+
+\begin{longtable}[t]{rllllllll}
+\toprule
+id & 0.5\_AgACI & 2.5\_AgACI & 0.5\_DtACI & 2.5\_DtACI & 0.5\_SF-OGD & 2.5\_SF-OGD & 0.5\_SAOCP & 2.5\_SAOCP\\
+\midrule
+22 & cc & cc & cc & cc & + & + & - & -\\
+26 & NaN & NaN & NaN & NaN & + & + & NaN & -\\
+1612 & NaN & + & NaN & + & + & - & NaN & -\\
+1956 & - & - & - & - & + & + & NaN & -\\
+2997 & - & cc & - & cc & + & cc & NaN & +\\
+\addlinespace
+3415 & - & - & - & - & + & + & - & -\\
+3906 & - & uc & - & + & + & uc & - & -\\
+4100 & uc & - & uc & - & + & + & - & -\\
+4474 & cc & cc & - & - & + & + & - & -\\
+4513 & cc & - & cc & - & + & - & - & -\\
+\addlinespace
+4596 & - & cc & - & cc & + & - & - & +\\
+4790 & - & - & - & - & NaN & - & NaN & NaN\\
+4883 & - & + & - & uc & - & uc & NaN & +\\
+5066 & - & - & - & - & + & + & - & -\\
+5145 & + & - & + & - & + & + & - & -\\
+\addlinespace
+5602 & - & - & - & - & + & - & NaN & -\\
+6224 & - & - & - & - & + & - & - & -\\
+6235 & NaN & + & NaN & + & + & + & - & +\\
+6252 & NaN & NaN & NaN & NaN & + & + & NaN & NaN\\
+6377 & cc & cc & cc & cc & + & - & - & uc\\
+\addlinespace
+6759 & - & - & - & - & + & + & - & +\\
+6780 & NaN & + & NaN & + & + & + & - & +\\
+6827 & cc & cc & cc & cc & + & + & - & +\\
+6845 & - & - & - & uc & + & - & - & +\\
+6961 & NaN & + & NaN & + & + & cc & NaN & +\\
+\addlinespace
+7719 & NaN & NaN & NaN & NaN & + & + & NaN & -\\
+7760 & + & cc & + & cc & NaN & - & NaN & NaN\\
+7961 & - & cc & - & cc & + & cc & - & -\\
+7962 & - & - & - & - & - & - & NaN & uc\\
+7963 & cc & - & cc & cc & + & cc & - & -\\
+\addlinespace
+8067 & NaN & - & NaN & - & + & + & - & -\\
+8108 & - & - & - & uc & + & + & - & uc\\
+8209 & - & - & - & - & cc & cc & NaN & -\\
+8266 & - & + & NaN & uc & + & + & - & +\\
+8370 & + & cc & + & cc & + & - & - & +\\
+\addlinespace
+8573 & NaN & NaN & NaN & NaN & NaN & NaN & NaN & NaN\\
+8624 & - & + & - & uc & + & - & - & +\\
+8724 & NaN & NaN & NaN & NaN & + & + & NaN & -\\
+8977 & - & uc & - & - & + & + & - & -\\
+9052 & - & uc & - & + & + & cc & - & +\\
+\addlinespace
+9063 & - & - & - & - & - & - & NaN & -\\
+9069 & NaN & + & NaN & + & + & + & - & +\\
+9184 & - & - & - & - & - & - & NaN & -\\
+9261 & - & - & - & - & + & + & NaN & -\\
+9404 & - & - & - & - & + & + & NaN & -\\
+\addlinespace
+9427 & - & - & - & uc & + & - & - & -\\
+9486 & - & + & - & + & cc & - & - & +\\
+9531 & - & cc & - & - & + & cc & NaN & +\\
+9785 & - & + & NaN & + & + & cc & - & +\\
+9808 & NaN & NaN & NaN & + & + & + & NaN & -\\
+\addlinespace
+9900 & NaN & - & NaN & NaN & + & + & NaN & -\\
+\bottomrule
+\end{longtable}
+\endgroup{}
+
+Note that some cells contain ``NaN''. Sometimes, VaRTest is not working
+on our data. We investigated source code from the github of the rugarch
+package and found that this happens when we have no log returns which
+are below computed VaR (or when we have to few of them). Obviously, in
+such a case we can not test anything because lack of observations. So we
+have just ``NaN'' in that case.
+
+\newpage
+
+\subsection{f) - saving the results}\label{f---saving-the-results}
+
+For some reason we need to save the results in a very specific format.
+The code below does exactly that.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(purrr)}
+
+\NormalTok{final\_df }\OtherTok{\textless{}{-}} 
+\FunctionTok{readRDS}\NormalTok{(}\StringTok{"data\_with\_predictions.rds"}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(id, time\_open, day\_num, log\_return, predicted\_log\_return)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{left\_join}\NormalTok{(}\FunctionTok{readRDS}\NormalTok{(}\StringTok{"VaR\_data.rds"}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+              \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{log\_return),}
+            \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"id"} \OtherTok{=} \StringTok{"id"}\NormalTok{, }\StringTok{"day\_num"} \OtherTok{=} \StringTok{"day\_num"}\NormalTok{)}
+\NormalTok{  )}
+
+\NormalTok{final\_df}\SpecialCharTok{$}\NormalTok{id}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{unique}\NormalTok{()}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{map}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{final\_df}\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{filter}\NormalTok{(id }\SpecialCharTok{==}\NormalTok{ .x)}
+\NormalTok{  )}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{saveRDS}\NormalTok{(}\StringTok{"final\_result.rds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

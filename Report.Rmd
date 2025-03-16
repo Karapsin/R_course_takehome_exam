@@ -1,0 +1,341 @@
+---
+header-includes:
+- \usepackage[backend=biber, style=authoryear]{biblatex}
+- \usepackage[fontsize=12pt]{scrextend}
+- \usepackage{indentfirst}
+- \usepackage{setspace}
+- \usepackage[singlelinecheck=false]{caption}
+- \usepackage{float}
+- \usepackage{sectsty}
+
+output:
+  pdf_document:
+    latex_engine: xelatex
+    toc: false
+    number_sections: False
+    keep_tex: true
+    extra_dependencies:
+    - booktabs
+    - caption
+indent: yes
+geometry: left=3cm,right=2.55cm,top=2cm,bottom=2cm
+---
+
+\allsectionsfont{\centering}
+\subsectionfont{\raggedright}
+\subsubsectionfont{\raggedright}
+
+\pagenumbering{gobble}
+
+\begin{centering}
+
+\vspace{3cm}
+
+\vspace{1cm}
+
+\Large
+{NATIONAL RESEARCH UNIVERSITY \\ HIGHER SCHOOL OF ECONOMICS}
+\normalsize
+\\
+{\bf International College of Economics and Finance}
+\vspace{1cm}
+
+
+\Large
+\doublespacing
+Karapsin Danila\\
+Gulomjonov Furkatjon\\
+\normalsize
+Takehome Exam, Topic 8\\
+38.04.01 ECONOMICS\\
+Master's Programme {\bf 'Financial Economics'}
+
+\vspace{1 cm}
+
+\normalsize
+\singlespacing
+
+
+\mbox{}
+\vfill
+\normalsize
+Moscow 2024
+
+\end{centering}
+
+\newpage
+
+\pagenumbering{arabic}
+\setcounter{page}{2}
+
+\tableofcontents
+
+\newpage
+
+## a) - data loading
+
+This section aims to show how did we load data needed for the project. The code which does the job is contained in the *data_load.R* file and duplicated below for convenience. The idea is simple: firstly, we save a data frame with all cryptocurrencies in the *crypto_df* object, then we are using *walk* function from *purrr* package to load every needed token, then the loaded data is saved in the loaded data folder in the rds format.
+
+```{r data_load, eval = FALSE}
+rm(list = ls())
+gc()
+library(dplyr)
+library(crypto2)
+library(purrr)
+
+crypto_df <- 
+  crypto_list()%>%
+    filter(id <= 10000)
+
+walk(unique(crypto_df$id),
+    ~ crypto_df%>%
+       filter(id == .x)%>%
+       crypto_history(convert = "USD")%>%
+       saveRDS(paste0("loaded_data\\", .x, ".rds"))
+)
+```
+
+\newpage
+
+## b), c) - data cleaning + forecasting
+
+This section provides an overview of the code from *predictions.R* file. Firstly, we consolidate each data frame loaded on the previous step into a single data frame using *map_dfr* function from *purrr* package. Then, we select only columns which will be needed further, keeping only those coins for which we have from 60 to 730 observations. Lastly, we compute log returns and also for every coin we are computing start of the prediction interval, which is equal to last_prediction_day + 1.
+
+Note that *group_by(id)* in the code below ensures that filtering is correct, also because of that last_prediction_day + 1 is defined for every coin separately.
+
+```{r data_clean, eval = FALSE}
+library(magrittr)
+library(purrr)
+library(forecast)
+library(dplyr)
+
+# loaded data concatenation + log_returns + some helpful vars
+df <- 
+  list.files("loaded_data")%>%
+    map_dfr(~.x%>%
+              paste0("loaded_data\\", .)%>%
+              readRDS()
+    )%>%
+  
+  select(id, time_open, close)%>%
+  group_by(id)%>%
+  filter(time_open%>%
+          length()%>%
+          unique()%>%
+          between(60, 730)
+  )%>%
+  arrange(id, time_open)%>%
+  mutate(day_num = row_number())%>%
+  mutate(last_day_num = max(day_num))%>%
+  mutate(log_return = close%>%
+                        `/`(lag(close, 1))%>% 
+                        log(),
+         last_prediction_day = last_day_num/2
+  )%>%
+  filter(!is.na(log_return))%>%
+  ungroup()%>%
+  select(-close)
+```
+
+Here we are using expanding window approach to forecast log returns. The idea is simple, firstly, we start a *while* block. Inside that block for every iteration we are checking how many rows we still need to fill, if that number is equal to 0, then the job is done and we are breaking the *while* loop. Otherwise we continue. Then we use *filter* on df object, to keep only training period. In the end, we use *group_by(id)* to compute *auto.arima()* one step ahead forecast, from which we are taking a middle point. After that, made prediction are added to *predictions_df* object and we are increasing last_prediction_day by 1 for those coins for which made predictions on the current step.
+
+```{r auto_arima, eval = FALSE}
+# expanding window, auto.arima on every step
+predictions_df <- data.frame(id = numeric(), 
+                             day_num = numeric(), 
+                             predicted_log_return = numeric()
+                  )
+
+while(TRUE){
+  
+    rows_left <- df%>%filter(day_num > last_prediction_day)%>%nrow()
+    if(rows_left == 0){break}
+    print(paste0("rows left: ", rows_left))
+      
+    current_predictions <- 
+      df%>%
+        filter(day_num < last_prediction_day + 1)%>%
+        group_by(id)%>%
+        summarise(day_num = max(day_num) + 1,
+                  predicted_log_return = log_return%>%
+                                          auto.arima()%>%
+                                          forecast(h = 1)%$%
+                                          mean
+        )%>%
+        ungroup()
+      
+      predictions_df%<>%
+        rbind(current_predictions)
+    
+    df%<>%
+      mutate(last_prediction_day = ifelse(id %in% current_predictions$id, 
+                                          last_prediction_day + 1, 
+                                          last_prediction_day)
+      )
+}
+```
+
+After previous step is finished, we are adding predictions to the initial data frame and saving it.
+
+```{r data_save, eval = FALSE}
+# add predicted values and save df for further usage
+df%<>%
+  left_join(predictions_df, by = c("day_num"="day_num", "id"="id"))
+
+saveRDS(df, "data_with_predictions.rds")
+```
+
+\newpage
+
+## d) - prediction intervals
+
+The code below is from the *predictions.R* file and it computes all the required prediction intervals, except the "FACI" intervals mentioned in the task, for which there is no function in the package. The data frame with computed prediction intervals is then saved in the rds format. Note again that we use *group_by(id)* to compute all the intervals for each coin separately.
+
+```{r intervals, eval = FALSE}
+rm(list = ls())
+library(magrittr)
+library(purrr)
+library(forecast)
+library(dplyr)
+library(AdaptiveConformal)
+
+df <- readRDS("data_with_predictions.rds")
+
+intervals_df <- 
+df%>%
+  filter(!is.na(predicted_log_return))%>%
+  group_by(id)%>%
+  summarise(
+            ###############################################
+            # alpha 5%
+            intervals_AgACI5 = 
+            aci(method = "AgACI")%>%
+            update(newY = log_return, 
+                   newpredictions = predicted_log_return
+            )%$%
+            intervals,
+
+            # no FACI in the package :(
+            intervals_dtACI5 = 
+            aci(method = "DtACI")%>%
+            update(newY = log_return, 
+                   newpredictions = predicted_log_return
+            )%$%
+            intervals,
+            
+            intervals_SF_OGD5 = 
+            aci(method = "SF-OGD")%>%
+            update(newY = log_return, 
+                   newpredictions = predicted_log_return,
+                   parameters=list(
+                   gamma = max(abs(log_return-predicted_log_return))/sqrt(3)
+                     )
+            )%$%
+            intervals,
+            
+            intervals_SAOCP5 = 
+            aci(method = "SAOCP")%>%
+            update(newY = log_return, 
+                   newpredictions = predicted_log_return,
+                   parameters=list(
+                   D = max(abs(log_return-predicted_log_return))/sqrt(3)
+                     )
+                   )%$%
+            intervals,
+            
+            ##################################################
+            # alpha 1%
+            intervals_AgACI1 = 
+            aci(method = "AgACI", alpha = 0.99)%>%
+            update(newY = log_return, 
+                   newpredictions = predicted_log_return
+            )%$%
+            intervals,
+            
+            # no FACI in the package :(
+            intervals_dtACI1 = 
+            aci(method = "DtACI", alpha = 0.99)%>%
+            update(newY = log_return, 
+                   newpredictions = predicted_log_return
+            )%$%
+            intervals,
+                                  
+            intervals_SF_OGD1 = 
+            aci(method = "SF-OGD", alpha = 0.99)%>%
+            update(newY = log_return, 
+                   newpredictions = predicted_log_return,
+                   parameters=list(
+                   gamma = max(abs(log_return-predicted_log_return))/sqrt(3)
+                     )
+            )%$%
+            intervals,
+            
+            intervals_SAOCP1 = 
+            aci(method = "SAOCP", alpha = 0.99)%>%
+            update(newY = log_return, 
+                   newpredictions = predicted_log_return,
+                   parameters=list(
+                   D = max(abs(log_return-predicted_log_return))/sqrt(3)
+                     )
+            )%$%
+            intervals
+  )
+  
+# we can do that since the order of days is preserved
+intervals_df$day_num <- 
+  df%>%
+  filter(!is.na(predicted_log_return))%$%
+  day_num
+
+intervals_df$log_return <- 
+  df%>%
+  filter(!is.na(predicted_log_return))%$%
+  log_return
+
+saveRDS(intervals_df, "VaR_data.rds")
+```
+
+\newpage
+
+## e) - backtesting
+
+The code in *uc_cc_report.R* file allows to create a table which provided below. The code itself is not provided in that report because of its ugliness (but it is availiable in the mentioned file). "+" indicates that both tests allowed to reject H0, "uc" or "cc" inidicate that we were able to reject the null only with one test, and, finally, "-" means that we can not reject the null with both tests.
+
+
+```{r tablehld, echo=FALSE}
+library(kableExtra)
+library(magrittr)
+readRDS("report_df.rds")%>%
+  kable()%>%
+  kable_styling(font_size = 8)
+```
+Note that some cells contain "NaN". Sometimes, VaRTest is not working on our data. We investigated source code from the github of the rugarch package and found that this happens when we have no log returns which are below computed VaR (or when we have to few of them). Obviously, in such a case we can not test anything because lack of observations. So we have just "NaN" in that case. 
+
+
+\newpage
+
+## f) - saving the results
+
+For some reason we need to save the results in a very specific format. The code below does exactly that. 
+
+```{r final_save, message = FALSE}
+library(dplyr)
+library(purrr)
+
+final_df <- 
+readRDS("data_with_predictions.rds")%>%
+  select(id, time_open, day_num, log_return, predicted_log_return)%>%
+  left_join(readRDS("VaR_data.rds")%>%
+              select(-log_return),
+            by = c("id" = "id", "day_num" = "day_num")
+  )
+
+final_df$id%>%
+  unique()%>%
+  map(~final_df%>%
+        filter(id == .x)
+  )%>%
+  saveRDS("final_result.rds")
+
+```
+
