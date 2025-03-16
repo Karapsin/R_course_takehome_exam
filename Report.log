@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.12.4)  16 MAR 2025 15:30
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.12.4)  16 MAR 2025 15:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1112,43 +1112,45 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 [2]
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 186.
-
 
 [3]
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 196.
+
 
 [4]
 
 [5]
 
-LaTeX Font Warning: Font shape `TU/lmtt/bx/it' in size <12> not available
-(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 349.
-
-
-
 [6]
-Underfull \vbox (badness 10000) detected at line 437
- []
 
-
-Underfull \vbox (badness 10000) detected at line 437
- []
+LaTeX Font Warning: Font shape `TU/lmtt/bx/it' in size <12> not available
+(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 359.
 
 
 
 [7]
+Underfull \vbox (badness 10000) detected at line 447
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 447
+ []
+
+
 
 [8]
-Overfull \hbox (33.0099pt too wide) in alignment at lines 452--518
+
+[9]
+Overfull \hbox (33.0099pt too wide) in alignment at lines 469--535
  [] [] [] [] [] [] [] [] [] 
  []
 
-[9]
-
 [10]
 
-[11] (./Report.aux)
+[11]
+
+[12] (./Report.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 1
 L3 programming layer <2024-11-02>
@@ -1158,12 +1160,12 @@ Package logreq Info: Writing requests to 'Report.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 28159 strings out of 475769
- 529907 string characters out of 5774078
- 1563483 words of memory out of 5000000
- 50625 multiletter control sequences out of 15000+600000
+ 28162 strings out of 475769
+ 529955 string characters out of 5774078
+ 1563533 words of memory out of 5000000
+ 50628 multiletter control sequences out of 15000+600000
  561732 words of font info for 73 fonts, out of 8000000 for 9000
  198 hyphenation exceptions out of 8191
  108i,5n,123p,695b,803s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Report.pdf (11 pages).
+Output written on Report.pdf (12 pages).

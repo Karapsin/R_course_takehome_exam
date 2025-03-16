@@ -72,6 +72,14 @@ Moscow 2024
 
 \newpage
 
+## Introduction + github link
+
+The code execution may take a lot of time. So we propose to use already downloaded and processed data which is stored on our github alongside with the code. 
+
+The link is: \url{https://github.com/Karapsin/R_course_takehome_exam}.
+
+\newpage
+
 ## a) - data loading
 
 This section aims to show how did we load data needed for the project. The code which does the job is contained in the *data_load.R* file and duplicated below for convenience. The idea is simple: firstly, we save a data frame with all cryptocurrencies in the *crypto_df* object, then we are using *walk* function from *purrr* package to load every needed token, then the loaded data is saved in the loaded data folder in the rds format.
@@ -301,6 +309,8 @@ saveRDS(intervals_df, "VaR_data.rds")
 
 The code in *uc_cc_report.R* file allows to create a table which provided below. The code itself is not provided in that report because of its ugliness (but it is availiable in the mentioned file). "+" indicates that both tests allowed to reject H0, "uc" or "cc" inidicate that we were able to reject the null only with one test, and, finally, "-" means that we can not reject the null with both tests.
 
+Note that some cells contain "NaN". Sometimes, VaRTest is not working on our data. We investigated the source code from the github of the rugarch package and found that this happens when we have no log returns which are below computed VaR (or when we have to few of them). Obviously, in such a case we can not test anything because lack of observations. So we have just "NaN" in that case. 
+
 
 ```{r tablehld, echo=FALSE}
 library(kableExtra)
@@ -309,8 +319,6 @@ readRDS("report_df.rds")%>%
   kable()%>%
   kable_styling(font_size = 8)
 ```
-Note that some cells contain "NaN". Sometimes, VaRTest is not working on our data. We investigated source code from the github of the rugarch package and found that this happens when we have no log returns which are below computed VaR (or when we have to few of them). Obviously, in such a case we can not test anything because lack of observations. So we have just "NaN" in that case. 
-
 
 \newpage
 
@@ -338,4 +346,3 @@ final_df$id%>%
   saveRDS("final_result.rds")
 
 ```
-
